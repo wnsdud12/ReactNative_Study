@@ -5,114 +5,67 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
+
 import {
+  Button,
+  Pressable,
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
+import InputField from './components/InputField';
+import Checkbox from './components/Checkbox';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [isAutoLogin, setIsAutoLogin] = useState(false);
+  
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={styles.backgroundStyle}>
+      <View style={styles.loginViewStyle}>
+        <View style={styles.titleStyle}>
+          <Text>95VISIT</Text>
+          <Text>방문 예약 서비스</Text>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <View style={styles.loginFormStyle}>
+          <InputField title={"아이디"} touched={true} errorText="" placeholder='아이디를 입력해주세요.' />
+          <InputField title={"비밀번호"} touched={true} errorText="" placeholder='비밀번호를 입력해주세요.' />
+          <View>
+            <Checkbox isChecked={isAutoLogin} onChange={(value) => {
+              console.log(value);
+              setIsAutoLogin(value);
+            }} />
+          </View>
+          <Button title='로그인' />
+        </View>
+      </View>
+    </SafeAreaView> 
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  backgroundStyle: {
+    flex: 1,
+    backgroundColor: '#e9ecef',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  loginViewStyle: {
+    width: 240,
+    height: 140,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  titleStyle: {
+    height: 60,
+    alignItems: "center"
   },
-  highlight: {
-    fontWeight: '700',
-  },
+  loginFormStyle: {
+    backgroundColor: "#fff",
+    padding: 20
+  }
 });
 
 export default App;
